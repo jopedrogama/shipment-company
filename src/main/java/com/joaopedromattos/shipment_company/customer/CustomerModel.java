@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Getter
 @Table(name = "customers")
 public class CustomerModel {
     
@@ -34,11 +36,9 @@ public class CustomerModel {
     @Column(unique = true)
     private String email;
     
-    @Column()
     @NotNull
     private boolean recieveComunication;
 
-    @Column()
     @NotNull
     private LocalDate birthDate;
 }
