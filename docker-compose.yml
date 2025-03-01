@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:17.2
+    container_name: masters-db
+    restart: always
+    environment:
+      POSTGRES_USER: masters
+      POSTGRES_PASSWORD: default
+      POSTGRES_DB: shipment_company
+    ports:
+      - "5432:5432"
+    volumes: 
+      - db:/var/lib/postgresql/data
+      
+volumes:
+  db:
+    driver: local
+    
