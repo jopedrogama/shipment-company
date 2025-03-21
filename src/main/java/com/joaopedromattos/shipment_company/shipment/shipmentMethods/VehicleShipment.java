@@ -1,4 +1,4 @@
-package com.joaopedromattos.shipment_company.shipment;
+package com.joaopedromattos.shipment_company.shipment.shipmentMethods;
 
 public class VehicleShipment {
     int valuePerKm;

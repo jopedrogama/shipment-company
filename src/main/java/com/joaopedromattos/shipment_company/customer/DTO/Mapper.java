@@ -15,4 +15,14 @@ public class Mapper {
             .birthDate(dto.getBirthDate())
             .build();
     }
+
+    public CustomerDTO toDTO(CustomerModel model) {
+        return CustomerDTO.builder()
+            .firstName(model.getFirstName())
+            .lastName(model.getLastName())
+            .email(model.getEmail())
+            .recieveComunication(model.isRecieveComunication())
+            .birthDate(model.getBirthDate())
+            .build();
+    }
 }
