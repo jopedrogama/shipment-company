@@ -2,6 +2,8 @@ package com.joaopedromattos.shipment_company.shipment;
 
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
+
 import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleType;
 
 public class ShipmentService {
@@ -23,14 +25,14 @@ public class ShipmentService {
         shipment.setPricePerKm(0);
         shipment.setPricePerKm(0);
         shipment.setEstimateDelivery(null);
-        shipment.setDistance(null);
-        shipment.
+        shipment.setDistance(10);
         this.shipmentRepository.save(shipment);
+    }
 
     public void getPriceEstimate(String type) throws Exception {
-       if ( this.isShipmentVehicleValid(type)){
+        if (this.isShipmentVehicleValid(type)) {
             throw new Exception("Invalid vehicle type for this package or shipment");
-       }
+        }
         throw new UnsupportedOperationException("Unimplemented method 'getPriceEstimate'");
     }
 
@@ -39,7 +41,7 @@ public class ShipmentService {
     }
 
     public ShipmentModel getShipmentById(long id) {
-        Optional<ShipmentModel> shipment = this.shipmentRepository.getShipmentById(id);
+        Optional<ShipmentModel> shipment = this.shipmentRepository.findById(id);
         return shipment.orElse(null);
     }
 
@@ -50,5 +52,5 @@ public class ShipmentService {
     private boolean isShipmentVehicleValid(String type) {
         throw new UnsupportedOperationException("Unimplemented method 'isShipmentVehicleValid'");
     }
-    
+
 }

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joaopedromattos.shipment_company.customer.DTO.CustomerDTO;
-import com.joaopedromattos.shipment_company.customer.DTO.Mapper;
+import com.joaopedromattos.shipment_company.customer.DTO.CustomerMapper;
 
 import java.util.List;
 
@@ -20,28 +20,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    
-    private CustomerService customerService;
-    private Mapper mapper;
 
-    public CustomerController(CustomerService customerService, Mapper mapper) {
+    private CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.mapper = mapper;
     }
 
     @GetMapping()
     public ResponseEntity<List<CustomerModel>> getCustomers() {
-        return new ResponseEntity<>(customerService.getCustomers(), HttpStatus.OK) ;
+        return new ResponseEntity<>(customerService.getCustomers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerModel> getCustomers(@PathVariable long id) {
-        return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK) ;
+        return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK);
     }
 
     @PostMapping()
     public ResponseEntity<CustomerModel> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        CustomerModel customer = mapper.toModel(customerDTO);
+        CustomerModel customer = CustomerMapper.toModel(customerDTO);
         try {
             CustomerModel response = customerService.createCustomer(customer);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -61,5 +59,5 @@ public class CustomerController {
         CustomerModel customerModel = this.customerService.updateCustomer(customer);
         return new ResponseEntity<>(customerModel, HttpStatus.OK);
     }
-    
+
 }

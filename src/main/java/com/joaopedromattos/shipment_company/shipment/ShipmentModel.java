@@ -10,19 +10,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
 
 @Data
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "shipment")
 public class ShipmentModel {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
