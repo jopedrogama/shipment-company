@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -17,6 +18,7 @@ import lombok.Builder;
 @Builder
 @AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "customers")
 public class CustomerModel {
     

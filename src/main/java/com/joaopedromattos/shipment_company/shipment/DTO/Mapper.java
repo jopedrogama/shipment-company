@@ -1,14 +1,21 @@
 package com.joaopedromattos.shipment_company.shipment.DTO;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.joaopedromattos.shipment_company.shipment.ShipmentModel;
+import com.joaopedromattos.shipment_company.shipment.ShipmentPrediction;
 
 @Component
 public class Mapper {
 
     public static ShipmentModel toModel(ShipmentDTO shipmentDto) {
-        return new ShipmentModel(0, 0, 0, 0, null, null, 0);
+        return ShipmentModel.builder().distance(shipmentDto.getDistance()).vehicleType(shipmentDto.getVehicleType()).weight(shipmentDto.getWeight()).build();
+    }
+
+    public static ShipmentEstimationsDTO toEstimationsDTO(List<ShipmentPrediction> predictions) {
+        return new ShipmentEstimationsDTO(predictions);
     }
 
 }

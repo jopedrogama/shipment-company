@@ -1,17 +1,28 @@
 package com.joaopedromattos.shipment_company.shipment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+import com.joaopedromattos.shipment_company.customer.CustomerModel;
+import com.joaopedromattos.shipment_company.customer.CustomerRepository;
+import com.joaopedromattos.shipment_company.customer.CustomerService;
+import com.joaopedromattos.shipment_company.shipment.DTO.ShipmentDTO;
+import com.joaopedromattos.shipment_company.shipment.shipmentMethods.ShipmentFactory;
+import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleShipment;
 import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleType;
 
+@Service
 public class ShipmentService {
 
     private ShipmentRepository shipmentRepository;
+    private CustomerService customerService;
 
-    public ShipmentService(ShipmentRepository shipmentRepository) {
+    public ShipmentService(ShipmentRepository shipmentRepository, CustomerService customerService) {
         this.shipmentRepository = shipmentRepository;
+        this.customerService = customerService;
     }
 
     public void updateShipment(long id, String entity) {
@@ -19,25 +30,43 @@ public class ShipmentService {
         if (shipment == null) {
             throw new IllegalArgumentException("Shipment not found");
         }
-        shipment.setDistance(id);
-        shipment.setWeight(0);
-        shipment.setVehicleType(VehicleType.CAR);
-        shipment.setPricePerKm(0);
-        shipment.setPricePerKm(0);
-        shipment.setEstimateDelivery(null);
-        shipment.setDistance(10);
-        this.shipmentRepository.save(shipment);
+
+        ShipmentModel shipmentToUpdate = ShipmentModel
+            .builder()
+            .id(shipment.getId())
+            .distance(shipment.getDistance())
+            .weight(shipment.getWeight())
+            .vehicleType(shipment.getVehicleType())
+            .price(shipment.getPrice())
+            .estimateDelivery(shipment.getEstimateDelivery())
+            .distance(shipment.getDistance())
+            .build();
+        
+        this.shipmentRepository.save(shipmentToUpdate);
     }
 
-    public void getPriceEstimate(String type) throws Exception {
-        if (this.isShipmentVehicleValid(type)) {
-            throw new Exception("Invalid vehicle type for this package or shipment");
+    public List<ShipmentPrediction> getPriceEstimate(ShipmentDTO shipment) {
+        List<ShipmentPrediction> predictions = new ArrayList<>();
+        for (VehicleType vehicleType : VehicleType.values()) {
+            VehicleShipment vehicle = ShipmentFactory.getVehicleShipment(vehicleType, shipment.getDistance());
+            predictions.add(vehicle.estimateDelivery());
         }
-        throw new UnsupportedOperationException("Unimplemented method 'getPriceEstimate'");
+       return predictions;
     }
 
-    public void orderShipment(String str) {
-        throw new UnsupportedOperationException("Unimplemented method 'orderShipment'");
+    public void orderShipment(ShipmentModel shipment, String customerEmail) {
+        CustomerModel customer = this.customerService.getCustomerByEmail(customerEmail);
+        if(customer == null) {
+           throw new IllegalArgumentException("Customer not found");
+        }
+        shipment.setCustomerId(customer.getId());
+
+        VehicleShipment vehicle = ShipmentFactory.getVehicleShipment(shipment.getVehicleType(), shipment.getDistance());
+        ShipmentPrediction prediction = vehicle.estimateDelivery();
+
+        shipment.setEstimateDelivery(prediction.getEstimateDeliveryDate());
+        shipment.setPrice(prediction.getShipmentPrice());
+        this.shipmentRepository.save(shipment);
     }
 
     public ShipmentModel getShipmentById(long id) {
@@ -49,8 +78,8 @@ public class ShipmentService {
         throw new UnsupportedOperationException("Unimplemented method 'getShipmentByCustomerId'");
     }
 
-    private boolean isShipmentVehicleValid(String type) {
-        throw new UnsupportedOperationException("Unimplemented method 'isShipmentVehicleValid'");
-    }
+    // private Boolean isShipmentVehicleValid(VehicleType vehicleType) {
+    //     return vehicleType != null; // && VehicleType.values().contains(vehicleType);
+    // }
 
 }

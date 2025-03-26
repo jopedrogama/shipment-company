@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joaopedromattos.shipment_company.shipment.DTO.Mapper;
+import com.joaopedromattos.shipment_company.shipment.DTO.ShipmentDTO;
 import com.joaopedromattos.shipment_company.shipment.DTO.ShipmentEstimationsDTO;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,21 +37,20 @@ public class ShipmentController {
     }
 
     @PostMapping
-    public String orderShipment(@RequestBody String str) {
-        this.shipmentService.orderShipment(str);
-        return str;
+    public String orderShipment(@RequestBody ShipmentDTO shipmentDto) {
+        ShipmentModel shipment = Mapper.toModel(shipmentDto);
+        this.shipmentService.orderShipment(shipment, shipmentDto.getCustomerEmail());
+        return shipment.toString();
     }
 
-    @GetMapping("/estimations")
-    public ResponseEntity<ShipmentEstimationsDTO> getShipmentEstimationsDTO(@RequestBody String type) {
-        this.shipmentService.getPriceEstimate(type);
-        return new ResponseEntity<>();
-        ;
+    @GetMapping("/estimation")
+    public ResponseEntity<ShipmentEstimationsDTO> getShipmentEstimationsDTO(@RequestBody ShipmentDTO shipment) {
+        return new ResponseEntity<>(Mapper.toEstimationsDTO(this.shipmentService.getPriceEstimate(shipment)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public String putMethodName(@PathVariable String id, @RequestBody String entity) {
-        this.shipmentService.updateShipment(id, entity);
+        // this.shipmentService.updateShipment(id, entity);
         return entity;
     }
 

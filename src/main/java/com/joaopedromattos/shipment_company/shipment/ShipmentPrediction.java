@@ -1,16 +1,15 @@
-package com.joaopedromattos.shipment_company.shipment.DTO;
+package com.joaopedromattos.shipment_company.shipment;
 
 import java.time.LocalDate;
-
-import org.springframework.stereotype.Component;
 
 import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleType;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Component
 @AllArgsConstructor
-public class ShipmentPredictionDTO {
+@Getter
+public class ShipmentPrediction {
     private VehicleType vehicleType;
     private LocalDate estimateDeliveryDate;
     private double shipmentPrice;

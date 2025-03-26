@@ -1,20 +1,15 @@
 package com.joaopedromattos.shipment_company.shipment.shipmentMethods;
 
-import com.joaopedromattos.shipment_company.shipment.DTO.ShipmentPredictionDTO;
+import com.joaopedromattos.shipment_company.shipment.ShipmentPrediction;
 
-public class VehicleShipment {
-    int valuePerKm;
+public abstract class VehicleShipment {
     double distance;
-    double taxFee;
 
-    public VehicleShipment(int valuePerKm,
-            double distance,
-            double taxFee) {
+    public VehicleShipment(
+            double distance
+            ) {
         this.distance = distance;
-        this.taxFee = taxFee;
-        this.valuePerKm = valuePerKm;
     }
 
-    public ShipmentPredictionDTO estimateDelivery() {
-    }
+    public abstract ShipmentPrediction estimateDelivery();
 }

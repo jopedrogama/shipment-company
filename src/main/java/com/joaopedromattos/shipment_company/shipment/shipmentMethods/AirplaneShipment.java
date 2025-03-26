@@ -2,13 +2,21 @@ package com.joaopedromattos.shipment_company.shipment.shipmentMethods;
 
 import java.time.LocalDate;
 
-import com.joaopedromattos.shipment_company.shipment.DTO.ShipmentPredictionDTO;
+import com.joaopedromattos.shipment_company.shipment.ShipmentPrediction;
 
 public class AirplaneShipment extends VehicleShipment {
 
+    private static final double TAX_FEE = 1.5;
+    private static final int DELIVERY_TIME_DAYS = 2;
+    private static final double VALUE_PER_KM = 1000;
+
+    public AirplaneShipment(double distance) {
+        super(distance);
+    }
+
     @Override
-    public ShipmentPredictionDTO estimateDelivery() {
-        return new ShipmentPredictionDTO(VehicleType.AIRPLANE, LocalDate.now().plusDays(3),
-                (this.distance * this.valuePerKm) * this.taxFee);
+    public ShipmentPrediction estimateDelivery() {
+        return new ShipmentPrediction(VehicleType.AIRPLANE, LocalDate.now().plusDays(DELIVERY_TIME_DAYS),
+                (this.distance * VALUE_PER_KM) * TAX_FEE);
     }
 }

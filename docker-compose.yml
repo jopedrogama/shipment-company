@@ -12,27 +12,6 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
 
-  redis:
-    image: redis/redis-stack:latest
-    container_name: redis
-    restart: always
-    ports:
-      - 6379:6379
-      - 8001:8001
-    
-  # api:
-  #   image: masters-api
-  #   container_name: masters-api
-  #   restart: always
-  #   ports:
-  #     - "5000:5000"
-  #   depends_on:
-  #     - db
-  #     - redis
-  #   environment:
-  #     DATABASE_URL: postgresql://masters:default@db:5432/shipment_company
-  #     REDIS_URL: redis://redis:6379/0
-      
 volumes:
   db:
     driver: local

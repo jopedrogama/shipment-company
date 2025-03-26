@@ -1,6 +1,5 @@
 package com.joaopedromattos.shipment_company.shipment;
-
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.joaopedromattos.shipment_company.customer.CustomerModel;
 import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleType;
@@ -15,9 +14,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
 @Table(name = "shipment")
@@ -31,13 +32,13 @@ public class ShipmentModel {
     private double distance;
 
     @NotNull
-    private double pricePerKm;
+    private double price;
 
     @NotNull
     private double weight;
 
     @NotNull
-    private Date estimateDelivery;
+    private LocalDate estimateDelivery;
 
     @NotNull
     private VehicleType vehicleType;
