@@ -29,8 +29,8 @@ public class ShipmentController {
     }
 
     @GetMapping("/customer/{id}")
-    public List<ShipmentModel> getShipmentByCustomerId(@PathVariable Long id) {
-        return this.shipmentService.getShipmentByCustomerId(id);
+    public ResponseEntity<List<ShipmentModel>> getShipmentByCustomerId(@PathVariable Long id) {
+        return new ResponseEntity<>(this.shipmentService.getShipmentByCustomerId(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -52,19 +52,21 @@ public class ShipmentController {
     }
 
     @GetMapping("/estimation")
-    public ResponseEntity<ShipmentEstimationsDTO> getShipmentEstimationsDTO(@RequestBody ShipmentDTO shipment) {
+    public ResponseEntity<ShipmentEstimationsDTO> getShipmentEstimationsDTO(@RequestBody ShipmentDTO shipmentDto) {
+        ShipmentModel shipment = Mapper.toModel(shipmentDto);
         return new ResponseEntity<>(Mapper.toEstimationsDTO(this.shipmentService.getPriceEstimate(shipment)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ShipmentModel putMethodName(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDto) {
+    public ResponseEntity<ShipmentModel> updateShipment(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDto) {
         ShipmentModel shipment = Mapper.toModel(shipmentDto);
-        return this.shipmentService.updateShipment(id, shipment);
+        return new ResponseEntity<>(this.shipmentService.updateShipment(id, shipment), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteShipment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteShipment(@PathVariable Long id) {
         this.shipmentService.deleteShipment(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

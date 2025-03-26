@@ -2,6 +2,9 @@ package com.joaopedromattos.shipment_company.shipment.shipmentMethods;
 
 import java.time.LocalDate;
 
+import org.springframework.http.HttpStatus;
+
+import com.joaopedromattos.shipment_company.exceptions.ApplicationException;
 import com.joaopedromattos.shipment_company.shipment.ShipmentPrediction;
 
 public class CarShipment extends VehicleShipment{
@@ -17,8 +20,8 @@ public class CarShipment extends VehicleShipment{
 
     @Override
     public ShipmentPrediction estimateDelivery() {
-        if(this.distance < 0) {
-            throw new IllegalArgumentException("Distance must be greater than 0 km");
+        if(this.distance < 10) {
+            throw new ApplicationException("Distance must be greater than 0 km", HttpStatus.BAD_REQUEST);
         }
         return new ShipmentPrediction(VehicleType.CAR, LocalDate.now().plusDays(DELIVERY_TIME_DAYS),
         (this.distance * VALUE_PER_KM) * TAX_FEE + DELIVERY_DRIVER_TIP);

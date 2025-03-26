@@ -1,6 +1,7 @@
 package com.joaopedromattos.shipment_company.shipment.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.joaopedromattos.shipment_company.shipment.ShipmentStatus;
 import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleType;
 
 import lombok.Builder;
@@ -15,6 +16,6 @@ public class ShipmentDTO {
     private double distance;
     private double weight;
     private VehicleType vehicleType;
-    private String status;
+    private ShipmentStatus status;
 
 }

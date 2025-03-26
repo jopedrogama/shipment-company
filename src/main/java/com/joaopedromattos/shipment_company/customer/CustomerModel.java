@@ -50,6 +50,6 @@ public class CustomerModel {
     private LocalDate birthDate;
 
     @JsonIgnore
-    @OneToMany()
+    @OneToMany(mappedBy = "customer")
     private List<ShipmentModel> shipments;
 }

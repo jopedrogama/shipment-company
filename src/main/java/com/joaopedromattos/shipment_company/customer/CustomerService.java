@@ -22,7 +22,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public CustomerModel createCustomer(CustomerModel customer) throws Exception{
+    public CustomerModel createCustomer(CustomerModel customer){
         
         CustomerModel user = this.getCustomerByEmail(customer.getEmail());
 
