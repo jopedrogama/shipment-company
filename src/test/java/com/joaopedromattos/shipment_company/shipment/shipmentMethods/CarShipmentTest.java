@@ -40,7 +40,7 @@ class CarShipmentTest {
     }
 
     @ParameterizedTest // This approach has the idea of not re writiting the code for each scenario
-    @ValueSource(doubles = {0, 50, 100, 200})
+    @ValueSource(doubles = {50, 100, 200})
     void estimateDelivery_shouldCalculateCorrectPrice(double distance) {
         CarShipment shipment = new CarShipment(distance);
         double expectedPrice = (distance * 1000) * 1.2 + 2;

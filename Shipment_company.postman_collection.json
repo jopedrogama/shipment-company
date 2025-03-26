@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "59e91cce-0ea2-4e74-b28e-7aafc4c5ad84",
+		"name": "Shipment_company",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "15466115",
+		"_collection_link": "https://planetary-crater-299882.postman.co/workspace/Shipment_company~f8e2a06d-eede-4d57-b91f-32f0c3466da0/collection/15466115-59e91cce-0ea2-4e74-b28e-7aafc4c5ad84?action=share&source=collection_link&creator=15466115"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Mattos\",\r\n    \"birthDate\": \"01/01/2000\",\r\n    \"email\": \"asdf213412341234@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/customer"
+					},
+					"response": []
+				},
+				{
+					"name": "List All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/customer"
+					},
+					"response": []
+				},
+				{
+					"name": "List By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/customer/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Jodasdfny\",\r\n    \"lastName\": \"Mattos\",\r\n    \"birthDate\": \"01/01/2000\",\r\n    \"email\": \"asdfasdfd12@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/customer/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/customer/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shipment",
+			"item": []
+		}
+	]
+}
