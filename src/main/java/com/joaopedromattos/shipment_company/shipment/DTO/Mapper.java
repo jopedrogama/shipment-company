@@ -11,7 +11,7 @@ import com.joaopedromattos.shipment_company.shipment.ShipmentPrediction;
 public class Mapper {
 
     public static ShipmentModel toModel(ShipmentDTO shipmentDto) {
-        return ShipmentModel.builder().distance(shipmentDto.getDistance()).vehicleType(shipmentDto.getVehicleType()).weight(shipmentDto.getWeight()).build();
+        return ShipmentModel.builder().distance(shipmentDto.getDistance()).vehicleType(shipmentDto.getVehicleType()).weight(shipmentDto.getWeight()).status(shipmentDto.getStatus()).build();
     }
 
     public static ShipmentEstimationsDTO toEstimationsDTO(List<ShipmentPrediction> predictions) {

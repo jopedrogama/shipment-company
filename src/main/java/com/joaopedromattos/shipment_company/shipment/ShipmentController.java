@@ -1,7 +1,10 @@
 package com.joaopedromattos.shipment_company.shipment;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,21 +29,26 @@ public class ShipmentController {
     }
 
     @GetMapping("/customer/{id}")
-    public String getShipmentByCustomerId(@PathVariable int id) {
+    public List<ShipmentModel> getShipmentByCustomerId(@PathVariable Long id) {
         return this.shipmentService.getShipmentByCustomerId(id);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShipmentModel> getShipmentById(@PathVariable int id) {
+    public ResponseEntity<ShipmentModel> getShipmentById(@PathVariable Long id) {
         ShipmentModel shipment = this.shipmentService.getShipmentById(id);
         return new ResponseEntity<>(shipment, HttpStatus.OK);
     }
 
+    @GetMapping()
+    public ResponseEntity<List<ShipmentModel>> getShipments() {
+        return new ResponseEntity<>(this.shipmentService.getShipments(), HttpStatus.OK);
+    }
+
     @PostMapping
-    public String orderShipment(@RequestBody ShipmentDTO shipmentDto) {
+    public ResponseEntity<ShipmentModel> orderShipment(@RequestBody ShipmentDTO shipmentDto) {
         ShipmentModel shipment = Mapper.toModel(shipmentDto);
-        this.shipmentService.orderShipment(shipment, shipmentDto.getCustomerEmail());
-        return shipment.toString();
+        ShipmentModel createdShipment = this.shipmentService.orderShipment(shipment, shipmentDto.getCustomerEmail());
+        return new ResponseEntity<>(createdShipment, HttpStatus.CREATED);
     }
 
     @GetMapping("/estimation")
@@ -49,9 +57,14 @@ public class ShipmentController {
     }
 
     @PutMapping("/{id}")
-    public String putMethodName(@PathVariable String id, @RequestBody String entity) {
-        // this.shipmentService.updateShipment(id, entity);
-        return entity;
+    public ShipmentModel putMethodName(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDto) {
+        ShipmentModel shipment = Mapper.toModel(shipmentDto);
+        return this.shipmentService.updateShipment(id, shipment);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteShipment(@PathVariable Long id) {
+        this.shipmentService.deleteShipment(id);
     }
 
 }

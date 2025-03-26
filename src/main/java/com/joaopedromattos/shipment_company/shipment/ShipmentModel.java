@@ -4,29 +4,33 @@ import java.time.LocalDate;
 import com.joaopedromattos.shipment_company.customer.CustomerModel;
 import com.joaopedromattos.shipment_company.shipment.shipmentMethods.VehicleType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Builder
+@Getter
+@Setter
+@Entity
 @Table(name = "shipment")
 public class ShipmentModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull
     private double distance;
@@ -44,6 +48,10 @@ public class ShipmentModel {
     private VehicleType vehicleType;
 
     @NotNull
-    @ManyToOne(targetEntity = CustomerModel.class)
-    private long customerId;
+    private String status;
+
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private CustomerModel customer;
 }

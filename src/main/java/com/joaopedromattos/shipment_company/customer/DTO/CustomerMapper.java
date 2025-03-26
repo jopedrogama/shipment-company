@@ -11,7 +11,7 @@ public class CustomerMapper {
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .email(dto.getEmail())
-                .recieveComunication(dto.isRecieveComunication())
+                .receiveCommunication(dto.isReceiveCommunication())
                 .birthDate(dto.getBirthDate())
                 .build();
     }
@@ -21,7 +21,7 @@ public class CustomerMapper {
                 .firstName(model.getFirstName())
                 .lastName(model.getLastName())
                 .email(model.getEmail())
-                .recieveComunication(model.isRecieveComunication())
+                .receiveCommunication(model.isReceiveCommunication())
                 .birthDate(model.getBirthDate())
                 .build();
     }

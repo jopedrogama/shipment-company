@@ -14,7 +14,7 @@ public class CustomerDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private boolean recieveComunication;
+    private boolean receiveCommunication;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate birthDate;

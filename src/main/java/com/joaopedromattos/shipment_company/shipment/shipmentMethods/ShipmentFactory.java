@@ -1,5 +1,9 @@
 package com.joaopedromattos.shipment_company.shipment.shipmentMethods;
 
+import org.springframework.http.HttpStatus;
+
+import com.joaopedromattos.shipment_company.exceptions.ApplicationException;
+
 public class ShipmentFactory {
     public static VehicleShipment getVehicleShipment(VehicleType vehicleType, double distance) {
         switch (vehicleType) {
@@ -8,7 +12,7 @@ public class ShipmentFactory {
             case AIRPLANE:
                 return new AirplaneShipment(distance);
             default:
-                throw new IllegalArgumentException("Invalid vehicle type");
+                throw new ApplicationException("Invalid vehicle type", HttpStatus.BAD_REQUEST);
         }
     }
 }

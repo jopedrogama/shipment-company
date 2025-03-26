@@ -16,6 +16,9 @@ public class AirplaneShipment extends VehicleShipment {
 
     @Override
     public ShipmentPrediction estimateDelivery() {
+        if(this.distance < 100) {
+            throw new IllegalArgumentException("Distance must be greater than 100 km");
+        }
         return new ShipmentPrediction(VehicleType.AIRPLANE, LocalDate.now().plusDays(DELIVERY_TIME_DAYS),
                 (this.distance * VALUE_PER_KM) * TAX_FEE);
     }

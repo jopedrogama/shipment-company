@@ -17,7 +17,10 @@ public class CarShipment extends VehicleShipment{
 
     @Override
     public ShipmentPrediction estimateDelivery() {
-        return new ShipmentPrediction(VehicleType.AIRPLANE, LocalDate.now().plusDays(DELIVERY_TIME_DAYS),
+        if(this.distance < 0) {
+            throw new IllegalArgumentException("Distance must be greater than 0 km");
+        }
+        return new ShipmentPrediction(VehicleType.CAR, LocalDate.now().plusDays(DELIVERY_TIME_DAYS),
         (this.distance * VALUE_PER_KM) * TAX_FEE + DELIVERY_DRIVER_TIP);
     }
     
